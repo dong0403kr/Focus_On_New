@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Marathon">
+
+
+    <ImageView
+        android:id="@+id/imageView_marathon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+
+        app:srcCompat="@drawable/marathon_discon" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="70dp"
+        android:textColor="@color/black"
+        android:format="00:00:00"
+        app:layout_constraintBottom_toTopOf="@+id/button_change"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_marathon"
+        app:layout_constraintStart_toStartOf="@+id/imageView_marathon"
+        app:layout_constraintTop_toTopOf="@+id/imageView_marathon"
+        app:layout_constraintVertical_bias="0.541" />
+
+    <Button
+        android:id="@+id/button_setting"
+        android:layout_width="74dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="336dp"
+        android:background="#00ff0000"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01" />
+
+    <Button
+        android:id="@+id/button_basic1"
+        android:layout_width="50dp"
+        android:layout_height="53dp"
+        android:background="#00ff0000"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.113" />
+
+    <Button
+        android:id="@+id/button_basic2"
+        android:layout_width="50dp"
+        android:layout_height="53dp"
+        android:background="#00ff0000"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112" />
+
+    <Button
+        android:id="@+id/button_change"
+        android:layout_width="115dp"
+        android:layout_height="122dp"
+        android:background="#00ff0000"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.748" />
+
+    <Button
+        android:id="@+id/button_timer"
+        android:layout_width="121dp"
+        android:layout_height="110dp"
+        android:background="#00ff0000"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.933" />
+
+    <TextView
+        android:id="@+id/textView_best"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최고기록 : 00:00:00"
+        android:textSize="30dp"
+        android:textColor="#CF4D4D"
+        app:layout_constraintBottom_toTopOf="@+id/button_change"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_marathon"
+        app:layout_constraintStart_toStartOf="@+id/imageView_marathon"
+        app:layout_constraintTop_toBottomOf="@+id/chronometer"
+        app:layout_constraintVertical_bias="0.222" />
+
+    <TextView
+        android:id="@+id/textViewBT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="연결상태"
+        app:layout_constraintBottom_toTopOf="@+id/button_change"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_marathon"
+        app:layout_constraintStart_toStartOf="@+id/imageView_marathon"
+        app:layout_constraintTop_toBottomOf="@+id/textView_best" />
+
+    <TextView
+        android:id="@+id/textViewSAT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="착석상태"
+        app:layout_constraintBottom_toTopOf="@+id/textViewBT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_best" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
