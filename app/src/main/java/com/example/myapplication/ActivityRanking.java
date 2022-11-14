@@ -5,26 +5,46 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ActivityRanking extends AppCompatActivity {
+
+    DBHelperTime dbHelperTime;
+    SQLiteDatabase dbt;
+
+    public static ActivityRanking activityR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
 
+        activityR = this;
 
         Button buttonTimer = (Button) findViewById(R.id.button_Timer_r);
         buttonTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ActivityTimer.class);
-                intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-                finish();
+                if(State.TIMER==0) {
+                    Intent intent = new Intent(getApplicationContext(), ActivityTimer.class);
+                    intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Intent intent = new Intent(getApplicationContext(), ActivityMarathon.class);
+                    intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -79,13 +99,17 @@ public class ActivityRanking extends AppCompatActivity {
             ActivityLogin activity_l = (ActivityLogin) ActivityLogin.activityL;
             activity_l.finish();
         }
-        if(ActivityRegister.activityR!=null){
-            ActivityRegister activity_r = (ActivityRegister) ActivityRegister.activityR;
-            activity_r.finish();
-        }
         if(ActivityTimer.activityT!=null){
             ActivityTimer activity_t = (ActivityTimer) ActivityTimer.activityT;
             activity_t.finish();
+        }
+        if(ActivityMarathon.activityM!=null){
+            ActivityMarathon activity_m = (ActivityMarathon) ActivityMarathon.activityM;
+            activity_m.finish();
+        }
+        if(ActivityProfile.activityP!=null){
+            ActivityProfile activity_p = (ActivityProfile) ActivityProfile.activityP;
+            activity_p.finish();
         }
 
         super.onBackPressed();

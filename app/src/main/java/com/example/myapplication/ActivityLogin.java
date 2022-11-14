@@ -46,7 +46,7 @@ public class ActivityLogin extends AppCompatActivity {
         String ALName = loginInfo.get("name");
 
         if (!ALName.isEmpty() || !ALName.equals("")){
-
+            State.LOGIN = ALName;
             Intent intentAuto = new Intent(getApplicationContext(), ActivityTimer.class);
             startActivity(intentAuto);
 
@@ -73,7 +73,7 @@ public class ActivityLogin extends AppCompatActivity {
                 sID = editTextID.getText().toString().trim();
                 sPW = editTextPW.getText().toString().trim();
 
-                if(checkAL.isChecked()) { // 자동로그인 체크 시 SharedPreference에 닉네임 정보 저장
+                if(checkAL.isChecked() && State.AutoLogin==1) { // 자동로그인 체크 시 SharedPreference에 닉네임 정보 저장
                     SharedPreferencesManager.setLoginInfo(getApplicationContext(), sID);
                 }
 
@@ -82,7 +82,7 @@ public class ActivityLogin extends AppCompatActivity {
 
                 if(editTextID.getText().toString().replace(" ", "").equals("")
                 || editTextPW.getText().toString().replace(" ", "").equals("")){
-                    Toast.makeText(getApplicationContext(), "빈 칸을 채워주세요." , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 모두 입력해 주세요" , Toast.LENGTH_SHORT).show();
                 }
                 else if (cursor.getCount() != 0){
                     cursor.moveToNext();
@@ -95,6 +95,7 @@ public class ActivityLogin extends AppCompatActivity {
 
                     if(editTextPW.getText().toString().equals(cPW.toString())){
                         State.LOGIN = sID;
+                        State.AutoLogin = 1;
                         Intent intent = new Intent(getApplicationContext(), ActivityTimer.class);
                         Toast.makeText(getApplicationContext(), "로그인 아이디 : " + sID, Toast.LENGTH_LONG).show();
                         startActivity(intent);

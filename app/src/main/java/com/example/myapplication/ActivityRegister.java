@@ -24,6 +24,8 @@ public class ActivityRegister extends AppCompatActivity {
 
     DBHelperUser dbHelperUser;
     SQLiteDatabase db;
+    DBHelperTime dbHelperTime;
+    SQLiteDatabase dbt;
     String sId;
     String sName;
     String sPw;
@@ -36,14 +38,10 @@ public class ActivityRegister extends AppCompatActivity {
 
     private int state;
 
-    public static ActivityRegister activityR = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        activityR = this;
 
         state=0;
 
@@ -53,6 +51,7 @@ public class ActivityRegister extends AppCompatActivity {
         EditText editTextPwCheck = findViewById(R.id.editTextPWCheck);
 
         dbHelperUser = new DBHelperUser(this);
+        dbHelperTime = new DBHelperTime(this);
 
         TextView textview;
         textview = (TextView) findViewById(R.id.regtitle);
@@ -98,6 +97,12 @@ public class ActivityRegister extends AppCompatActivity {
                 values.put("Time", iTime);
                 values.put("signdate", sDate);
 
+                ContentValues values_time = new ContentValues();
+
+                values_time.put("userid", sId);
+                values_time.put("d_time", 0);
+                values_time.put("best", 0);
+
 
                 if (editTextId.getText().toString().replace(" ", "").equals("")
                     || editTextName.getText().toString().replace(" ", "").equals("")
@@ -117,6 +122,9 @@ public class ActivityRegister extends AppCompatActivity {
                     else {
                         db = dbHelperUser.getWritableDatabase();
                         db.insert(DBContractUser.TABLE_NAME, null, values);
+
+                        dbt = dbHelperTime.getWritableDatabase();
+                        dbt.insert(DBContractTime.TABLE_NAME2, null, values_time);
 
                         Toast.makeText(getApplicationContext(), "회원가입 성공!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), ActivityLogin.class);

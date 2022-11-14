@@ -10,4 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bluetooth">#0012AE</color>
     <color name="main_color">#7ECEF4</color>
+    <color name="record">#CF4D4D</color>
+    <color name="new_record">#FFC107</color>
 </resources>

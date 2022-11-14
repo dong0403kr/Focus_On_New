@@ -8,56 +8,27 @@
 
 
     <ImageView
-        android:id="@+id/imageView_bg"
+        android:id="@+id/mode_basic"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-
-        app:srcCompat="@drawable/basic_discon" />
-
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="70dp"
-        android:textColor="@color/black"
-        android:format="00:00:00"
-        app:layout_constraintBottom_toTopOf="@+id/button_bluetooth"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_bg"
-        app:layout_constraintStart_toStartOf="@+id/imageView_bg"
-        app:layout_constraintTop_toTopOf="@+id/imageView_bg"
-        app:layout_constraintVertical_bias="0.541" />
-
-    <Button
-        android:id="@+id/button_bluetooth"
-        android:layout_width="115dp"
-        android:layout_height="122dp"
-        android:background="#00ff0000"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748" />
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_timer"
+        app:srcCompat="@drawable/timer_basic" />
 
-    <Button
-        android:id="@+id/button_timer"
-        android:layout_width="121dp"
-        android:layout_height="110dp"
-        android:background="#00ff0000"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/imageView_state"
+        android:layout_width="282dp"
+        android:layout_height="203dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toTopOf="@+id/timerbutton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.933" />
+        app:layout_constraintTop_toBottomOf="@+id/chronometer"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/state_discon" />
 
     <Button
         android:id="@+id/button_marat1"
@@ -65,12 +36,13 @@
         android:layout_height="53dp"
         android:background="#00ff0000"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.112" />
+        app:layout_constraintBottom_toBottomOf="@+id/mode_basic"
+        app:layout_constraintEnd_toEndOf="@+id/mode_basic"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="@+id/mode_basic"
+        app:layout_constraintTop_toTopOf="@+id/mode_basic"
+        app:layout_constraintVertical_bias="0.5" />
+
 
     <Button
         android:id="@+id/button_marat2"
@@ -78,13 +50,13 @@
         android:layout_height="53dp"
         android:background="#00ff0000"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111" />
-a
+        app:layout_constraintBottom_toBottomOf="@+id/mode_basic"
+        app:layout_constraintEnd_toEndOf="@+id/mode_basic"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="@+id/mode_basic"
+        app:layout_constraintTop_toTopOf="@+id/mode_basic"
+        app:layout_constraintVertical_bias="0.5" />
+
     <ImageView
         android:id="@+id/app_bar_timer"
         android:layout_width="match_parent"
@@ -94,16 +66,6 @@ a
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/appbar_timer" />
-
-    <ImageView
-        android:id="@+id/mode_basic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar_timer"
-        app:srcCompat="@drawable/timer_basic" />
 
     <ImageView
         android:id="@+id/bottom_nav_timer"
@@ -116,9 +78,10 @@ a
         app:layout_constraintStart_toStartOf="parent" />
 
     <TableRow
+        android:id="@+id/tableRow2"
         android:layout_width="match_parent"
         android:layout_height="62dp"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <Space
             android:layout_width="0dp"
@@ -146,6 +109,47 @@ a
             android:layout_weight="1"
             android:background="#00ff0000" />
     </TableRow>
+
+    <ImageView
+        android:id="@+id/black_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:alpha="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_timer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blackscreen" />
+
+    <ImageButton
+        android:id="@+id/timerbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ff0000"
+        android:src="@drawable/button_unavail"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_timer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode_basic"
+        app:layout_constraintVertical_bias="0.947" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/mainfontbald"
+        android:format="00:00:00"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:textSize="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_timer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode_basic"
+        app:layout_constraintVertical_bias="0.152" />
 
 
     <!--    <Button-->
