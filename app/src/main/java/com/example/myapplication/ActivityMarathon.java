@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Marathon extends AppCompatActivity {
+public class ActivityMarathon extends AppCompatActivity {
 
     private Chronometer chronometer;
     private Chronometer chronometer_b;
@@ -34,6 +34,8 @@ public class Marathon extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marathon);
+
+        State.TIMER=1;
         TextView textViewBest = findViewById(R.id.textView_best);
         TextView textViewBT = findViewById(R.id.textViewBT);
         TextView textViewSAT = findViewById(R.id.textViewSAT);

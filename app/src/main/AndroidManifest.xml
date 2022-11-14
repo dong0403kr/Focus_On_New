@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".Marathon"
+            android:name=".ActivityMarathon"
             android:exported="true" />
         <activity
             android:name=".ActivityProfile"

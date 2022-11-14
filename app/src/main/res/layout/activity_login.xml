@@ -24,11 +24,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:orientation="vertical"
-        android:padding="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleimage">
+        app:layout_constraintTop_toBottomOf="@+id/titleimage"
+        app:layout_constraintVertical_bias="0.155">
 
         <TableRow
             android:layout_width="match_parent"
@@ -40,18 +45,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/mainfontbald"
                 android:gravity="center"
-                android:textSize="20dp"
                 android:text="아이디"
-                android:fontFamily="@font/mainfontbald"/>
+                android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/editTextLoginId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:ems="10"
-                android:inputType="textEmailAddress" />
+                android:inputType="textPersonName" />
 
         </TableRow>
 
@@ -65,18 +70,30 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/mainfontbald"
                 android:gravity="center"
-                android:textSize="20dp"
                 android:text="비밀번호"
-                android:fontFamily="@font/mainfontbald"/>
+                android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/editTextPassword"
+                android:id="@+id/editTextLoginPw"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:ems="10"
                 android:inputType="textPassword" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/checkAL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="자동 로그인" />
         </TableRow>
     </LinearLayout>
 
@@ -84,15 +101,15 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         android:paddingBottom="20dp"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintVertical_bias="0.4">
 
         <TableRow
             android:layout_width="match_parent"
@@ -102,7 +119,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/RegisterBtn"
@@ -110,25 +127,25 @@
                 android:layout_height="70dp"
                 android:layout_weight="5"
                 android:text="회원가입"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/LoginBtn"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="8"
-                android:textSize="25dp"
-                android:text="로그인" />
+                android:text="로그인"
+                android:textSize="25dp" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </TableRow>
 
     </LinearLayout>

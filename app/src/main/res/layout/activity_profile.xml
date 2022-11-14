@@ -21,6 +21,16 @@
 
 
     <ImageView
+        android:id="@+id/app_bar_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/appbar_profile" />
+
+    <ImageView
         android:id="@+id/bottom_nav_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

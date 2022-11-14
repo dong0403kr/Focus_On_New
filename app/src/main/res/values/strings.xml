@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Focus On</string>
     <string name="connected">센서 연결됨</string>
     <string name="disconnected">센서를 연결해 주세요</string>
     <!-- TODO: Remove or change this placeholder text -->

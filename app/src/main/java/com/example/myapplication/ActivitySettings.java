@@ -58,7 +58,7 @@ public class ActivitySettings extends AppCompatActivity {
     @Override
     public void onBackPressed() {   // 뒤로가기 누르면 다이얼로그 생성
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("앱을 종료 하시겠습니까?"); // 다이얼로그 제목
+        builder.setTitle("앱을 종료하시겠습니까?"); // 다이얼로그 제목
         builder.setCancelable(true);   // 다이얼로그 화면 밖 터치 방지
         builder.setPositiveButton("예", new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
