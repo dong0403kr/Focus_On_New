@@ -100,6 +100,7 @@ public class ActivityRegister extends AppCompatActivity {
                 ContentValues values_time = new ContentValues();
 
                 values_time.put("userid", sId);
+                values_time.put("name", sName);
                 values_time.put("d_time", 0);
                 values_time.put("best", 0);
 

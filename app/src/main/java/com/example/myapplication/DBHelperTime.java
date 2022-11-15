@@ -8,6 +8,7 @@ interface DBContractTime {
     static final String TABLE_NAME2="TIME";
     static final String COL_ID="ID";
     static final String COL_USERID="USERID";
+    static final String COL_NAME="NAME";
     static final String COL_D_TIME="D_TIME";
     static final String COL_BEST="BEST";
 
@@ -15,6 +16,7 @@ interface DBContractTime {
             TABLE_NAME2 + "(" +
             COL_ID + " INTEGER NOT NULL PRIMARY KEY, " +
             COL_USERID + " TEXT NOT NULL, " +
+            COL_NAME + " TEXT NOT NULL, " +
             COL_D_TIME + " INTEGER NOT NULL, " +
             COL_BEST + " INTEGER NOT NULL)";
 
@@ -24,7 +26,7 @@ interface DBContractTime {
 
 class DBHelperTime extends SQLiteOpenHelper {
     static final String DB_FILE = "time_t_focuson.db";
-    static final int DB_VERSION = 3;
+    static final int DB_VERSION = 4;
 
     DBHelperTime(Context context) {
         super(context, DB_FILE, null, DB_VERSION);

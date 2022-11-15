@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.DBContractTime.TABLE_NAME2;
+import static com.example.myapplication.DBContractUser.TABLE_NAME;
 import static com.example.myapplication.State.BTState;
 import static com.example.myapplication.State.SATState;
 
@@ -10,8 +12,10 @@ import androidx.lifecycle.Observer;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -29,6 +33,8 @@ public class ActivityMarathon extends AppCompatActivity {
 
     DBHelperUser dbHelperUser;
     SQLiteDatabase db;
+    DBHelperTime dbHelperTime;
+    SQLiteDatabase dbt;
 
     private Chronometer chronometer;
     private Chronometer chronometer_b;
@@ -43,10 +49,18 @@ public class ActivityMarathon extends AppCompatActivity {
     int m;
     int s;
 
-    int Htemp=0;
-    int Mtemp=0;
-    int Stemp=0;
+//    int Htemp=0;
+//    int Mtemp=0;
+//    int Stemp=0;
 
+    int besttime=0;
+    int besttime_db;
+    int sumtime_db;
+    int sumtime=0;
+    int sumtime_now=0;
+
+    int dbh,dbm,dbs;
+    private int firstStart=0;
 
 
     @Override
@@ -63,6 +77,27 @@ public class ActivityMarathon extends AppCompatActivity {
         ImageButton buttonTimer = findViewById(R.id.timerbutton_m);
 
         dbHelperUser = new DBHelperUser(this);
+        dbHelperTime = new DBHelperTime(this);
+
+        dbt = dbHelperTime.getReadableDatabase();
+        Cursor cursor = dbt.rawQuery(DBContractTime.SQL_SELECT_ID, new String[]{State.LOGIN});
+        for(int i=0; i<cursor.getCount(); i++){
+            cursor.moveToNext();
+            besttime_db=cursor.getInt(4);
+        }
+        cursor.close();
+        dbh = (int)(besttime_db /3600);
+        dbm = (int)(besttime_db - dbh*3600)/60;
+        dbs = (int)(besttime_db - dbh*3600- dbm*60) ;
+        textViewBest.setText(String.format("최고기록 : %02d:%02d:%02d", dbh, dbm, dbs));
+
+        db = dbHelperUser.getReadableDatabase();
+        Cursor cursor2 = db.rawQuery(DBContractUser.SQL_SELECT_ID, new String[]{State.LOGIN});
+        for(int i=0; i<cursor2.getCount(); i++){  // 유저db에서 누적 공부시간 가져옴
+            cursor2.moveToNext();
+            sumtime_db=cursor2.getInt(4);
+        }
+        cursor2.close();
 
         BTState.observe(this, new Observer<Integer>() {
             @Override
@@ -86,24 +121,31 @@ public class ActivityMarathon extends AppCompatActivity {
                         stateimageView.setImageResource(R.drawable.state_sat);
                     }
                     else {
+                        if (State.AutoStart == 1 && firstStart == 1) {
+                            timeElapsed.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                            buttonTimer.setImageResource(R.drawable.button_marathon);
+                            timeElapsed.start();
+                            timeElapsed.setTextColor(getColor(R.color.white));
+                            blackscreenFadeIn(blackScreen);
+                            running = true;
+                        } else{
                         buttonTimer.setImageResource(R.drawable.button_avail);
                         stateimageView.setImageResource(R.drawable.state_sat);
+                        }
                     }
                 }
                 else if(sat==0 && State.BT==1){
                     if(running) {
-                        if( ((Htemp*3600)+(Mtemp*60)+Stemp) <= ((h*3600)+(m*60)+s) ) {
+                        sumtime+=sumtime_now;
+                        sumtime_now=0;
+                        if( ((dbh*3600)+(dbm*60)+dbs) <= ((h*3600)+(m*60)+s) ) {
                         textViewBest.setText(String.format("최고기록 : %02d:%02d:%02d", h, m, s));
                         }
                         else {
-                        textViewBest.setText(String.format("최고기록 : %02d:%02d:%02d", Htemp, Mtemp, Stemp));
+                        textViewBest.setText(String.format("최고기록 : %02d:%02d:%02d", dbh, dbm, dbs));
                         }
 
-                        Htemp = h;
-                        Mtemp = m;
-                        Stemp = s;
-
-                        timeElapsed.setBase(SystemClock.elapsedRealtime());
+//                        timeElapsed.setBase(SystemClock.elapsedRealtime());
                         pauseOffset = 0;
                         timeElapsed.stop();
                         stateimageView.setImageResource(R.drawable.state_connected);
@@ -131,9 +173,10 @@ public class ActivityMarathon extends AppCompatActivity {
                 String mm = m < 10 ? "0"+m: m+"";
                 String ss = s < 10 ? "0"+s: s+"";*/
                 cArg.setText(String.format("%02d:%02d:%02d", h, m, s ));
-
-                if(((Htemp*3600)+(Mtemp*60)+Stemp) < ((h*3600)+(m*60)+s)){
-                    textViewBest.setText("최고기록 갱신!");
+                sumtime_now=(int)(time/1000);
+                if(((dbh*3600)+(dbm*60)+dbs) < ((h*3600)+(m*60)+s)){
+                    besttime=(int)(time/1000);
+                    textViewBest.setText("최고기록 경신!");
                     textViewBest.setTextColor(getColor(R.color.new_record));
                 }
             }
@@ -144,6 +187,9 @@ public class ActivityMarathon extends AppCompatActivity {
             public void onClick(View v){
                 if(State.BT == 1 && State.SAT == 1) {
                     if (!running) {
+                        if(firstStart==0){
+                            firstStart=1;
+                        }
                         timeElapsed.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                         buttonTimer.setImageResource(R.drawable.button_marathon);
                         timeElapsed.start();
@@ -189,6 +235,18 @@ public class ActivityMarathon extends AppCompatActivity {
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(besttime_db < besttime) {
+                    ContentValues valuesT = new ContentValues();
+                    dbt = dbHelperTime.getWritableDatabase();
+                    valuesT.put("best", besttime); // 마라톤 최고기록 타임db에 업데이트
+                    dbt.update(TABLE_NAME2, valuesT, "USERID = ?", new String[]{State.LOGIN});
+                }
+                int valuesumtime = sumtime + sumtime_db;
+                ContentValues valuesU = new ContentValues();
+                db = dbHelperUser.getWritableDatabase();
+                valuesU.put("time", valuesumtime); // 누적시간 유저db에 업데이트
+                db.update(TABLE_NAME,valuesU,"USERID = ?", new String[]{State.LOGIN});
+
                 Intent intent = new Intent(getApplicationContext(), ActivitySettings.class);
                 intent.addFlags(intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
@@ -200,6 +258,18 @@ public class ActivityMarathon extends AppCompatActivity {
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(besttime_db < besttime) {
+                    ContentValues valuesT = new ContentValues();
+                    dbt = dbHelperTime.getWritableDatabase();
+                    valuesT.put("best", besttime); // 마라톤 최고기록 타임db에 업데이트
+                    dbt.update(TABLE_NAME2, valuesT, "USERID = ?", new String[]{State.LOGIN});
+                }
+                int valuesumtime = sumtime + sumtime_db;
+                ContentValues valuesU = new ContentValues();
+                db = dbHelperUser.getWritableDatabase();
+                valuesU.put("time", valuesumtime); // 누적시간 유저db에 업데이트
+                db.update(TABLE_NAME,valuesU,"USERID = ?", new String[]{State.LOGIN});
+
                 Intent intent = new Intent(getApplicationContext(), ActivityProfile.class);
                 startActivity(intent);
 //                overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit);
@@ -210,50 +280,23 @@ public class ActivityMarathon extends AppCompatActivity {
         buttonRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(besttime_db < besttime) {
+                    ContentValues valuesT = new ContentValues();
+                    dbt = dbHelperTime.getWritableDatabase();
+                    valuesT.put("best", besttime); // 마라톤 최고기록 타임db에 업데이트
+                    dbt.update(TABLE_NAME2, valuesT, "USERID = ?", new String[]{State.LOGIN});
+                }
+                int valuesumtime = sumtime + sumtime_db;
+                ContentValues valuesU = new ContentValues();
+                db = dbHelperUser.getWritableDatabase();
+                valuesU.put("time", valuesumtime); // 누적시간 유저db에 업데이트
+                db.update(TABLE_NAME,valuesU,"USERID = ?", new String[]{State.LOGIN});
+
                 Intent intent = new Intent(getApplicationContext(), ActivityRanking.class);
                 startActivity(intent);
-//                overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit);
             }
         });
 
-//        Button imageButton3 = (Button) findViewById(R.id.button_change);
-//        imageButton3.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                if(running){
-//                    if( ((Htemp*3600)+(Mtemp*60)+Stemp) <= ((h*3600)+(m*60)+s) ) {
-//                        textViewBest.setText(String.format("최고기록 : %02d:%02d:%02d", h, m, s));
-//                    }
-//                    else {
-//                        textViewBest.setText(String.format("최고기록 : %02d:%02d:%02d", Htemp, Mtemp, Stemp));
-//                    }
-//
-//                    Htemp = h;
-//                    Mtemp = m;
-//                    Stemp = s;
-//
-//                    timeElapsed.setBase(SystemClock.elapsedRealtime());
-//                    pauseOffset = 0;
-//                    timeElapsed.stop();
-//                    imageView.setImageResource(R.drawable.marathon_sat);
-//                    running = false;
-//
-//                }
-//
-//                i = 2 - i;
-//
-//                if(i==2){
-//                    imageView.setImageResource(R.drawable.marathon);
-//                    i=1;
-//                    j=2;
-//                } else if(i==1) {
-//                    imageView.setImageResource(R.drawable.marathon_sat);
-//                    i=0;
-//                    j=1;
-//                }
-//            }
-//        });
     }
 
     public void blackscreenFadeIn(View view) {
@@ -307,6 +350,10 @@ public class ActivityMarathon extends AppCompatActivity {
         if(ActivityProfile.activityP!=null){
             ActivityProfile activity_p = (ActivityProfile) ActivityProfile.activityP;
             activity_p.finish();
+        }
+        if(ActivityRanking_m.activityRM!=null){
+            ActivityRanking_m activity_rm = (ActivityRanking_m) ActivityRanking_m.activityRM;
+            activity_rm.finish();
         }
 
         super.onBackPressed();

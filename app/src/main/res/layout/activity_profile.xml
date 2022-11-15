@@ -28,7 +28,7 @@
         app:srcCompat="@drawable/selected_profile" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav_profile"
@@ -36,29 +36,99 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar_profile">
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="155dp"
+            android:layout_height="167dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/profile_default" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/mainfontbald"
+            android:textSize="40dp"
+            android:textColor="@color/black"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:text="사용자" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:paddingBottom="40dp">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/mainfont"
+                android:gravity="center"
+                android:text="레벨 :"
+                android:textColor="@color/black"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/textView_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/mainfont"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.8"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="@font/mainfont"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:text="전체 누적 시간 :" />
 
             <TextView
                 android:id="@+id/textView_sumtime"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:layout_gravity="center"
                 android:text=""
-                android:textSize="30dp" />
+                android:textSize="20dp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"/>
+
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView_dailytime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="30dp" />
-        </TableRow>
     </LinearLayout>
 
     <TableRow

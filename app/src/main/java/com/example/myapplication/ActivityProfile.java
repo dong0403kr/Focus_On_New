@@ -21,8 +21,11 @@ public class ActivityProfile extends AppCompatActivity {
     DBHelperUser dbHelperUser;
     SQLiteDatabase db;
 
-    int d_time;
     int sum_time;
+    int h,m,s;
+    int level;
+    String dbName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,28 +37,27 @@ public class ActivityProfile extends AppCompatActivity {
         dbHelperUser = new DBHelperUser(this);
         dbHelperTime = new DBHelperTime(this);
 
-        dbt = dbHelperTime.getReadableDatabase();
-        Cursor cursor = dbt.rawQuery(DBContractTime.SQL_SELECT_ID, new String[]{State.LOGIN});
-
-        for(int i=0; i<cursor.getCount(); i++){  // 타임db에서 기존 일간 공부시간 가져옴
-            cursor.moveToNext();
-            d_time=cursor.getInt(2);
-        }
-        cursor.close();
-
         db = dbHelperUser.getReadableDatabase();
         Cursor cursor2 = db.rawQuery(DBContractUser.SQL_SELECT_ID, new String[]{State.LOGIN});
 
         for(int i=0; i<cursor2.getCount(); i++){  // 유저db에서 누적 공부시간 가져옴
             cursor2.moveToNext();
             sum_time=cursor2.getInt(4);
+            dbName=cursor2.getString(2);
         }
         cursor2.close();
 
+        level = (int)sum_time/3600;
+        TextView textViewLevel = findViewById(R.id.textView_level);
+        textViewLevel.setText(String.valueOf(level));
         TextView textViewsumtime = findViewById(R.id.textView_sumtime);
-        textViewsumtime.setText("누적시간 : " + sum_time);
-        TextView textViewdailytime = findViewById(R.id.textView_dailytime);
-        textViewdailytime.setText("일간시간 : " + d_time);
+        h = (int)(sum_time /3600);
+        m = (int)(sum_time - h*3600)/60;
+        s = (int)(sum_time - h*3600- m*60);
+        textViewsumtime.setText(String.format("%d시간 %d분 %d초", h, m, s));
+        TextView textViewName = findViewById(R.id.textViewName);
+        textViewName.setText(dbName);
+
 
 
 
@@ -139,6 +141,10 @@ public class ActivityProfile extends AppCompatActivity {
         if(ActivityMarathon.activityM!=null){
             ActivityMarathon activity_m = (ActivityMarathon) ActivityMarathon.activityM;
             activity_m.finish();
+        }
+        if(ActivityRanking_m.activityRM!=null){
+            ActivityRanking_m activity_rm = (ActivityRanking_m) ActivityRanking_m.activityRM;
+            activity_rm.finish();
         }
 
         super.onBackPressed();

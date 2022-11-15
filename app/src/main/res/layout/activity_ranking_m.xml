@@ -26,6 +26,361 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_ranking_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_ranking_m"
+        app:layout_constraintVertical_bias="0.1">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="40dp">
+
+            <TextView
+                android:id="@+id/ranking_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mainfontbald"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:text="-마라톤 모드-" />
+
+            <Space
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/ranking_basic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기본 모드" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="순위" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="닉네임" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:gravity="center"
+                android:text="최고기록" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:id="@+id/image1st"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/medal_1st" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/name_1st_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/time_1st_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:id="@+id/image2nd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/medal_2nd" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/name_2nd_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/time_2nd_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:id="@+id/image3rd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/medal_3rd" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/name_3rd_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/time_3rd_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/textView4th"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="4등"
+                android:gravity="center"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/name_4th_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/time_4th_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/textView5th"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="5등"
+                android:gravity="center"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/name_5th_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="30dp" />
+
+            <Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/time_5th_m"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="20dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3" />
+
+            <TextView
+                android:id="@+id/myranking"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="@font/mainfont"
+                android:textColor="@color/black"
+                android:text="내 순위" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3" />
+
+            <TextView
+                android:id="@+id/myrecord"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="@font/mainfont"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="내 최고기록" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+            <TextView
+                android:id="@+id/my_ranking_m"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:text="-" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"/>
+
+            <TextView
+                android:id="@+id/my_record_m"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:text="-" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+        </TableRow>
+
+    </LinearLayout>
+
     <TableRow
         android:id="@+id/tableRow"
         android:layout_width="match_parent"

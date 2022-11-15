@@ -60,6 +60,8 @@ public class ActivityTimer extends AppCompatActivity {
     int dbtime; // 전체 누적시간. 유저db
     int d_dbtime;  // 일간 공부시간. 타임db
 
+    private int firstStart=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,7 @@ public class ActivityTimer extends AppCompatActivity {
 
         for(int i=0; i<cursor.getCount(); i++){  // 타임db에서 기존 일간 공부시간 가져옴
             cursor.moveToNext();
-            d_dbtime=cursor.getInt(2);
+            d_dbtime=cursor.getInt(3);
         }
         cursor.close();
 
@@ -121,8 +123,17 @@ public class ActivityTimer extends AppCompatActivity {
                         stateimageView.setImageResource(R.drawable.state_sat);
                     }
                     else {
-                        buttonTimer.setImageResource(R.drawable.button_avail);
-                        stateimageView.setImageResource(R.drawable.state_sat);
+                        if (State.AutoStart == 1 && firstStart == 1) {
+                            timeElapsed.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                            timeElapsed.start();
+                            timeElapsed.setTextColor(getColor(R.color.white));
+                            blackscreenFadeIn(blackScreen);
+                            buttonTimer.setImageResource(R.drawable.button_running);
+                            running = true;
+                        } else {
+                            buttonTimer.setImageResource(R.drawable.button_avail);
+                            stateimageView.setImageResource(R.drawable.state_sat);
+                        }
                     }
                 }
                 else if(sat==0 && State.BT==1){
@@ -141,67 +152,6 @@ public class ActivityTimer extends AppCompatActivity {
         });
 
         Chronometer timeElapsed = (Chronometer) findViewById(R.id.chronometer);
-
-//        if (!bt.isBluetoothAvailable()) { //블루투스 사용 불가라면 사용불가라고 토스트 띄워줌
-//            Toast.makeText(getApplicationContext()
-//                    , "블루투스를 사용할 수 없습니다"
-//                    , Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
-//
-//        // 데이터를 받았는지 감지하는 리스너
-//        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
-//            //데이터 수신되면
-//            public void onDataReceived(byte[] data, String message) {
-//                if(message.equals("1")){
-//                    State.SAT=1;
-//                    SATState.setValue(1);
-//                }
-//                else
-//                {
-//                    State.SAT=0;
-//                    SATState.setValue(0);
-//                }
-//            }
-//        });
-//
-//        // 블루투스가 잘 연결이 되었는지 감지하는 리스너
-//        bt.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() { //연결됐을 때
-//            public void onDeviceConnected(String name, String address) {
-//                Toast.makeText(getApplicationContext()
-//                        , "센서 블루투스 연결 성공"
-//                        , Toast.LENGTH_SHORT).show();
-//                State.BT=1;
-//                BTState.setValue(1);
-//            }
-//            public void onDeviceDisconnected() { //연결해제
-//                Toast.makeText(getApplicationContext()
-//                        , "블루투스 연결이 해제되었습니다", Toast.LENGTH_SHORT).show();
-//                State.BT=0;
-//                BTState.setValue(0);
-//            }
-//            public void onDeviceConnectionFailed() { //연결실패
-//                Toast.makeText(getApplicationContext()
-//                        , "블루투스 연결에 실패했습니다", Toast.LENGTH_SHORT).show();
-//                State.BT=0;
-//                BTState.setValue(0);
-//            }
-//        });
-//
-//        Button btnConnect = findViewById(R.id.button_bluetooth); //연결시도
-//        btnConnect.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {
-//                    bt.disconnect();
-//                } else {
-//                    Intent intent = new Intent(getApplicationContext(), DeviceList.class);
-//                    startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
-//                }
-//            }
-//        });
-
-        /*chronometer = findViewById(R.id.chronometer);*/
-        /*chronometer.setFormat("시간: %s");*/
 
 
         db = dbHelperUser.getReadableDatabase();
@@ -229,6 +179,9 @@ public class ActivityTimer extends AppCompatActivity {
             public void onClick(View v) {
                 if (State.BT == 1 && State.SAT == 1) {
                     if (!running) {
+                        if(firstStart==0){
+                            firstStart=1;
+                        }
                         timeElapsed.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                         timeElapsed.start();
                         timeElapsed.setTextColor(getColor(R.color.white));
@@ -468,6 +421,10 @@ public class ActivityTimer extends AppCompatActivity {
         if(ActivityProfile.activityP!=null){
             ActivityProfile activity_p = (ActivityProfile) ActivityProfile.activityP;
             activity_p.finish();
+        }
+        if(ActivityRanking_m.activityRM!=null){
+            ActivityRanking_m activity_rm = (ActivityRanking_m) ActivityRanking_m.activityRM;
+            activity_rm.finish();
         }
 
         super.onBackPressed();

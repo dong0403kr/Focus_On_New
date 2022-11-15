@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.DBContractUser.TABLE_NAME;
+import static com.example.myapplication.DBContractTime.TABLE_NAME2;
 import static com.example.myapplication.State.BTState;
 import static com.example.myapplication.State.SATState;
 
@@ -11,11 +13,15 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
@@ -23,6 +29,11 @@ import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class ActivitySettings extends AppCompatActivity {
+
+    DBHelperUser dbHelperUser;
+    SQLiteDatabase db;
+    DBHelperTime dbHelperTime;
+    SQLiteDatabase dbt;
 
     public static ActivitySettings activityS = null;
 
@@ -36,6 +47,87 @@ public class ActivitySettings extends AppCompatActivity {
         activityS = this;
 
         bt = new BluetoothSPP(this);
+
+        dbHelperUser = new DBHelperUser(this);
+        dbHelperTime = new DBHelperTime(this);
+
+        Switch switchAS = findViewById(R.id.switchAutoStart);
+        Button btnConnect = findViewById(R.id.BTbutton);
+        Button buttonL = findViewById(R.id.button_leave);
+        buttonL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db = dbHelperUser.getWritableDatabase();
+                db.delete(DBContractUser.TABLE_NAME, "USERID=?", new String[]{State.LOGIN});
+                dbt = dbHelperTime.getWritableDatabase();
+                dbt.delete(DBContractTime.TABLE_NAME2, "USERID=?", new String[]{State.LOGIN});
+                SharedPreferencesManager.clearPreferences(getApplicationContext());
+                Intent intentL = new Intent(getApplicationContext(), ActivityLogin.class);
+                startActivity(intentL);
+                Toast.makeText(getApplicationContext(), "탈퇴가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                finish();
+                if(ActivityLogin.activityL!=null){
+                    ActivityLogin activity_l = (ActivityLogin) ActivityLogin.activityL;
+                    activity_l.finish();
+                }
+                if(ActivityTimer.activityT!=null){
+                    ActivityTimer activity_t = (ActivityTimer) ActivityTimer.activityT;
+                    activity_t.finish();
+                }
+                if(ActivityMarathon.activityM!=null){
+                    ActivityMarathon activity_m = (ActivityMarathon) ActivityMarathon.activityM;
+                    activity_m.finish();
+                }
+                if(ActivityProfile.activityP!=null){
+                    ActivityProfile activity_p = (ActivityProfile) ActivityProfile.activityP;
+                    activity_p.finish();
+                }
+                if(ActivityRanking.activityR!=null){
+                    ActivityRanking activity_r = (ActivityRanking) ActivityRanking.activityR;
+                    activity_r.finish();
+                }
+                if(ActivityRanking_m.activityRM!=null){
+                    ActivityRanking_m activity_rm = (ActivityRanking_m) ActivityRanking_m.activityRM;
+                    activity_rm.finish();
+                }
+            }
+        });
+
+
+        Button buttonLO = findViewById(R.id.button_logout);
+        buttonLO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferencesManager.clearPreferences(getApplicationContext());
+                Intent intentL = new Intent(getApplicationContext(), ActivityLogin.class);
+                startActivity(intentL);
+                finish();
+                if(ActivityLogin.activityL!=null){
+                    ActivityLogin activity_l = (ActivityLogin) ActivityLogin.activityL;
+                    activity_l.finish();
+                }
+                if(ActivityTimer.activityT!=null){
+                    ActivityTimer activity_t = (ActivityTimer) ActivityTimer.activityT;
+                    activity_t.finish();
+                }
+                if(ActivityMarathon.activityM!=null){
+                    ActivityMarathon activity_m = (ActivityMarathon) ActivityMarathon.activityM;
+                    activity_m.finish();
+                }
+                if(ActivityProfile.activityP!=null){
+                    ActivityProfile activity_p = (ActivityProfile) ActivityProfile.activityP;
+                    activity_p.finish();
+                }
+                if(ActivityRanking.activityR!=null){
+                    ActivityRanking activity_r = (ActivityRanking) ActivityRanking.activityR;
+                    activity_r.finish();
+                }
+                if(ActivityRanking_m.activityRM!=null){
+                    ActivityRanking_m activity_rm = (ActivityRanking_m) ActivityRanking_m.activityRM;
+                    activity_rm.finish();
+                }
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             requestPermissions(
@@ -82,16 +174,18 @@ public class ActivitySettings extends AppCompatActivity {
         bt.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() { //연결됐을 때
             public void onDeviceConnected(String name, String address) {
                 Toast.makeText(getApplicationContext()
-                        , "센서 블루투스 연결 성공"
+                        , "방석 블루투스 연결 성공!"
                         , Toast.LENGTH_SHORT).show();
                 State.BT=1;
                 BTState.setValue(1);
+                btnConnect.setText("연결해제");
             }
             public void onDeviceDisconnected() { //연결해제
                 Toast.makeText(getApplicationContext()
                         , "블루투스 연결이 해제되었습니다", Toast.LENGTH_SHORT).show();
                 State.BT=0;
                 BTState.setValue(0);
+                btnConnect.setText("연결하기");
             }
             public void onDeviceConnectionFailed() { //연결실패
                 Toast.makeText(getApplicationContext()
@@ -101,14 +195,25 @@ public class ActivitySettings extends AppCompatActivity {
             }
         });
 
-        Button btnConnect = findViewById(R.id.BTbutton); //연결시도
-        btnConnect.setOnClickListener(new View.OnClickListener() {
+
+        btnConnect.setOnClickListener(new View.OnClickListener() { //연결시도
             public void onClick(View v) {
                 if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {
                     bt.disconnect();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), DeviceList.class);
                     startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
+                }
+            }
+        });
+
+        switchAS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    State.AutoStart=1;
+                } else {
+                    State.AutoStart=0;
                 }
             }
         });
@@ -263,6 +368,10 @@ public class ActivitySettings extends AppCompatActivity {
         if(ActivityRanking.activityR!=null){
             ActivityRanking activity_r = (ActivityRanking) ActivityRanking.activityR;
             activity_r.finish();
+        }
+        if(ActivityRanking_m.activityRM!=null){
+            ActivityRanking_m activity_rm = (ActivityRanking_m) ActivityRanking_m.activityRM;
+            activity_rm.finish();
         }
 
         super.onBackPressed();

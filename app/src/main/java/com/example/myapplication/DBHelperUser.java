@@ -29,7 +29,7 @@ interface DBContractUser {
 
 class DBHelperUser extends SQLiteOpenHelper {
     static final String DB_FILE = "user_t_focuson.db";
-    static final int DB_VERSION = 1;
+    static final int DB_VERSION = 2;
 
     DBHelperUser(Context context) {
         super(context, DB_FILE, null, DB_VERSION);

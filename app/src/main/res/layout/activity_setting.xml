@@ -72,13 +72,22 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:fontFamily="@font/mainfont"
+                android:textColor="@color/black"
                 android:text="방석 블루투스" />
+
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/BTbutton"
@@ -89,16 +98,25 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/mainfont"
+                android:textSize="23dp"
+                android:textColor="@color/black"
                 android:text="착석 여부로 타이머 제어하기" />
 
+            <Space
+                android:layout_width="40dp"
+                android:layout_height="wrap_content" />
+
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/switchAutoStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="" />
@@ -123,10 +141,12 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_leave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#E12416"
+                android:textColor="@color/white"
                 android:text="회원탈퇴" />
         </TableRow>
     </LinearLayout>
